@@ -1,0 +1,52 @@
+# Builds the mod zip and publishes a GitHub release when a version tag is pushed.
+# Tags are plain semver without a "v": 1.0.0, 1.2.3, 2.0.0-beta.1. The tag must match
+# version_string in mod_info/x_rls_vehicle_damage_patch/info.json.
+name: Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+.[0-9]+-*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check the tag is semver and matches info.json
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import json, os, re, sys
+          tag = os.environ["TAG"]
+          semver = r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$"
+          if not re.match(semver, tag):
+              sys.exit(f"Tag {tag!r} is not semver (expected e.g. 1.0.0, no v prefix)")
+          info = json.load(open("mod_info/x_rls_vehicle_damage_patch/info.json", encoding="utf-8"))
+          if info["version_string"] != tag:
+              sys.exit(f"info.json version_string is {info['version_string']!r} but the tag is {tag!r}")
+          print("Releasing", tag)
+          PY
+
+      - name: Build
+        run: python tools/build.py --release
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          prerelease=""
+          case "$TAG" in *-*) prerelease="--prerelease" ;; esac
+          gh release create "$TAG" "dist/x_rls_vehicle_damage_patch_${TAG}.zip" \
+            --title "RLS Vehicle Damage Patch $TAG" --generate-notes $prerelease
