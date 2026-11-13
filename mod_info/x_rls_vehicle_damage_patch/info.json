@@ -1,8 +1,8 @@
 {
   "title": "RLS Vehicle Damage Patch",
   "tag_line": "Replace damaged parts in RLS Part Customization without repairing the whole car first",
-  "version_string": "1.0.0",
+  "version_string": "1.1.0",
   "username": "Xetius",
   "tagid": "x_rls_vehicle_damage_patch",
-  "message": "RLS Career Overhaul blocks Part Customization once a car has 3 or more broken parts. This mod lifts that block and lets you buy new parts for the damaged ones. In the part list, broken and damaged parts show in red with how badly they're damaged, slots with damaged parts inside show in yellow, and flat tyres are marked with the wheel (search 'broken', 'damaged' or 'flat'). Parts you don't replace keep their damage, a new tyre comes fresh and inflated, and Cancel brings the car back as it was. Works at runtime without copying or replacing any RLS files. Requires RLS Career Overhaul; written against 2.8.0.2-beta. Licensed under AGPL-3.0, with source in the zip."
+  "message": "RLS Career Overhaul blocks Part Customization once a car has 3 or more broken parts. This mod lifts that block and lets you buy new parts for the damaged ones. In the part list, broken and damaged parts show in red with how badly they're damaged, slots with damaged parts inside show in yellow, and flat tyres are marked with the wheel (search 'broken', 'damaged' or 'flat'). Works in the garage and in the business computer (race team fleet and tuning shop customer cars, which no longer have to be abandoned). Parts you don't replace keep their damage, a new tyre comes fresh and inflated, and Cancel brings the car back as it was. Works at runtime without copying or replacing any RLS files. Requires RLS Career Overhaul; written against 2.8.0.2-beta. Licensed under AGPL-3.0, with source in the zip."
 }

@@ -1,9 +1,9 @@
-RLS Vehicle Damage Patch 1.0.0
+RLS Vehicle Damage Patch 1.1.0
 
 Lets you replace damaged parts in RLS Career Overhaul's Part Customization without repairing the
 whole car first (written against RLS 2.8.0.2-beta).
 
-Install: close BeamNG.drive, put x_rls_vehicle_damage_patch_1.0.0.zip (unextracted) in
+Install: close BeamNG.drive, put x_rls_vehicle_damage_patch_1.1.0.zip (unextracted) in
   %LOCALAPPDATA%\BeamNG\BeamNG.drive\current\mods\
 and start the game. RLS Career Overhaul must be installed too. Remove any older copy of this mod
 first (including a _dev zip), or both load. To uninstall, delete the zip; saves are left as they
@@ -61,6 +61,21 @@ What it changes:
 
 6. Cancel (or Save for later) brings the car back with its damage, instead of healed.
 
+7. Business cars: the race team's fleet and the tuning shop's customer cars.
+   RLS refuses the business computer's Parts while a car has any broken part, and the tuning shop
+   locks a customer car once its damage passes the shop's limit, leaving Abandon as the only way
+   on. With the mod:
+   - Parts (and the tuning shop's Tuning) open on a damaged car, with the same red and yellow
+     labels as the garage shop.
+   - Buy new parts for the broken ones as usual.
+   - When you leave Parts, the dents go back on the damaged parts you didn't replace, and they
+     stay broken, as in the garage shop. RLS's business preview respawns the car straight, so
+     without this, opening Parts and leaving would repair the car for free.
+   - Tuning shop: Put Away and Complete stay refused while the damage is over the limit (the
+     message now says to replace the broken parts, or abandon). Replace enough to get under it.
+   Personal cars driven into a business keep RLS's repair block. Tuning kits still need a repaired
+   car.
+
 Limits:
 - If a purchase changes the car's shape (for example bigger wheels or a different suspension),
   the old dents are put back at their old positions, the same as RLS's own partial repair. Check
@@ -69,16 +84,19 @@ Limits:
   kept, but the dents aren't put back. The log says so.
 
 Changes:
+  1.1.0  Race team and tuning shop cars: replace broken parts in the business computer.
   1.0.0  First release.
 
 How it works: the mod wraps RLS functions at runtime and ships no RLS code, so it doesn't overwrite
 RLS files. If a later RLS version renames these functions, the mod logs a warning under
-"xRlsVehicleDamagePatch" and leaves that part of RLS alone. Look for "Part shop hooks active" and
-"Damage manager hook active" in beamng.log.
+"xRlsVehicleDamagePatch" (or "xRlsVehicleDamagePatchBusiness") and leaves that part of RLS alone.
+Look for "Part shop hooks active", "Damage manager hook active" and "Business hooks active" in
+beamng.log.
 
 Test, from the folder holding the mod's files (unzip the release), with RLS's lua/ tree extracted
 to <rls folder>:
   luajit tools/test.lua <rls folder> [a damage snapshot .json to check against]
+  luajit tools/test_business.lua <rls folder>
 
 Build: python tools/build.py (your own _dev zip) or python tools/build.py --release
 

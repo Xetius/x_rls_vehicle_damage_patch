@@ -13,7 +13,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 NAME = "x_rls_vehicle_damage_patch"
 CONTENT = ["lua", "scripts", "ui", "mod_info", "LICENSE", "README.txt"]
 # The release also carries the test and build scripts, so the zip holds the complete source.
-RELEASE_EXTRA = ["tools/build.py", "tools/test.lua"]
+RELEASE_EXTRA = ["tools/build.py", "tools/test.lua", "tools/test_business.lua"]
 
 release = "--release" in sys.argv[1:]
 if release:
